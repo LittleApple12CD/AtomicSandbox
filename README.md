@@ -22,7 +22,7 @@
 | CPU | 1核 2.5GHz | 4核 |
 | 内存 | 2GB | 8GB |
 | 显卡 | OpenGL 4.6 兼容 | GTX 960 / GTX 1060 |
-| 存储 | 100MB | 500GB |
+| 存储 | 100MB | 500MB |
 | 系统 | Windows 7 / Windows 10/11 |
 
 ## 🚀 快速开始
