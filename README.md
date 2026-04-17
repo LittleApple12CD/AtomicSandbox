@@ -1,2 +1,42 @@
-# AtomicSandbox
-原子沙盒，一个模拟原子的游戏，可以通过放置中子、质子、电子、夸克等粒子来组成原子。注意：本游戏仅供娱乐，非真实。 AtomicSandbox, a game simulating atoms, allows you to compose atoms by placing particles such as neutrons, protons, electrons, and quarks. Note: This game is for entertainment only and is not real.
+# ⚛️ Atomic Sandbox
+
+**从基本粒子开始的绝对真实物理沙盒**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
+[![OpenGL](https://img.shields.io/badge/OpenGL-4.6-green.svg)](https://www.opengl.org/)
+
+## ✨ 特性
+
+- 🔬 **从基本粒子开始**：模拟质子、中子、电子，从底层构建物质
+- 🎯 **绝对真实的物理**：基于库仑定律和牛顿力学的精确计算
+- 🎚️ **智能LOD系统**：远景自动简化模拟，平衡真实与性能
+- ⏰ **时间操控**：支持从 1/1,000,000 倍慢放到 1000 倍快进
+- ⏸️ **逐帧分析**：暂停 + 帧步进，逐帧解剖物理过程
+- 🎨 **非像素3D渲染**：球体实例化 + 电子云光晕效果
+- 💰 **完全免费**：无内购，无广告，开源
+
+## 🖥️ 系统要求
+
+| 配置 | 最低要求 | 推荐配置 |
+|------|---------|---------|
+| CPU | 1核 2.5GHz | 4核 |
+| 内存 | 2GB | 8GB |
+| 显卡 | OpenGL 4.6 兼容 | GTX 960 / GTX 1060 |
+| 存储 | 100MB | 500GB |
+| 系统 | Windows 7 / Windows 10/11 |
+
+## 🚀 快速开始
+
+### 方式一：下载预编译版本（推荐）
+
+从 [Releases](https://github.com/LittleApple12CD/AtomicSandbox/releases) 页面下载对应系统的安装包，解压后运行 `AtomicSandbox.exe`。
+
+### 方式二：从源码编译
+
+#### 依赖安装
+
+**Ubuntu/Debian:**
+```bash
+sudo apt update
+sudo apt install build-essential cmake libglfw3-dev libglm-dev libgl1-mesa-dev
