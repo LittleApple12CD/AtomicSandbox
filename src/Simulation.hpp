@@ -18,45 +18,66 @@ public:
     void run();
     void shutdown();
 
+    // 粒子管理
     void addParticle(ParticleType type, glm::vec3 position);
     void clearParticles();
+    
+    // 画笔控制
+    void setBrushRadius(float radius) { brushRadius = radius; }
+    void setBrushStrength(float strength) { brushStrength = strength; }
+    void setBrushType(ParticleType type) { currentBrushType = type; }
 
 private:
-    void handleInput();
-    void updateCamera();
-    void setupCallbacks();
-    void spawnParticleAtMouse();
-
-    static void mouseCallback(GLFWwindow* win, double xpos, double ypos);
-    static void mouseButtonCallback(GLFWwindow* win, int button, int action, int mods);
-    static void scrollCallback(GLFWwindow* win, double xoffset, double yoffset);
-    static void keyCallback(GLFWwindow* win, int key, int scancode, int action, int mods);
-    void onMouseMove(double xpos, double ypos);
-    void onMouseButton(int button, int action, int mods);
-    void onScroll(double xoffset, double yoffset);
-    void onKey(int key, int scancode, int action, int mods);
-
+    // ==================== 核心系统 ====================
     std::vector<Particle> particles;
     std::unique_ptr<PhysicsEngine> physicsEngine;
     std::unique_ptr<LODSystem> lodSystem;
     std::unique_ptr<TimeManager> timeManager;
     std::unique_ptr<Renderer> renderer;
-
-    GLFWwindow* window = nullptr;
-    int windowWidth = 1280, windowHeight = 720;
-
-    glm::vec3 cameraPos = glm::vec3(0,0,5);
-    glm::vec3 cameraTarget = glm::vec3(0,0,0);
-    float cameraDistance = 5.0f;
-    float cameraYaw = -90.0f;
-    float cameraPitch = 0.0f;
-    bool mouseLeftDown = false;
-    double lastMouseX = 0.0, lastMouseY = 0.0;
     
-    float targetCameraDistance;  // 目标相机距离（用于平滑缩放）
-    float brushRadius = 0.1f;
-    float brushStrength = 1.0f;
-    ParticleType currentBrushType = ParticleType::PROTON;
-
+    // ==================== 窗口 ====================
+    GLFWwindow* window;
+    int windowWidth;
+    int windowHeight;
+    
+    // ==================== 相机控制 ====================
+    glm::vec3 cameraPos;
+    glm::vec3 cameraTarget;
+    float cameraDistance;
+    float targetCameraDistance;
+    float cameraYaw;
+    float cameraPitch;
+    bool mouseLeftDown;
+    double lastMouseX;
+    double lastMouseY;
+    
+    // ==================== 画笔 ====================
+    float brushRadius;
+    float brushStrength;
+    ParticleType currentBrushType;
+    
+    // ==================== 输入处理 ====================
+    void handleInput();
+    void updateCamera();
+    void setupCallbacks();
+    void spawnParticleAtMouse();
+    void printControls();
+    void printDebugInfo();
+    
+    // ==================== 静态回调函数 ====================
     static Simulation* currentInstance;
+    static void mouseCallback(GLFWwindow* win, double xpos, double ypos);
+    static void mouseButtonCallback(GLFWwindow* win, int button, int action, int mods);
+    static void scrollCallback(GLFWwindow* win, double xoffset, double yoffset);
+    static void keyCallback(GLFWwindow* win, int key, int scancode, int action, int mods);
+    
+    // ==================== 实例回调函数 ====================
+    void onMouseMove(double xpos, double ypos);
+    void onMouseButton(int button, int action, int mods);
+    void onScroll(double xoffset, double yoffset);
+    void onKey(int key, int scancode, int action, int mods);
+    
+    // ==================== 调试 ====================
+    float frameTimeAccumulator;
+    int frameCount;
 };

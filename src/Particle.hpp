@@ -4,50 +4,38 @@
 #include <cstdint>
 
 enum class ParticleType : uint8_t {
-    // 费米子（夸克）
-    UP_QUARK, DOWN_QUARK,
-    // 费米子（轻子）
-    ELECTRON, ELECTRON_NEUTRINO,
-    // 重子
-    PROTON, NEUTRON,
-    // 玻色子（力媒介粒子）
-    PHOTON, GLUON, W_BOSON, Z_BOSON,
-    GRAVITON,  // 引力子（假设）
-    // 反粒子
-    POSITRON, ANTI_ELECTRON_NEUTRINO,
-    ANTI_UP_QUARK, ANTI_DOWN_QUARK
+    PROTON, NEUTRON, ELECTRON, PHOTON, GLUON, W_BOSON, Z_BOSON,
+    UP_QUARK, DOWN_QUARK, ELECTRON_NEUTRINO, POSITRON,
+    ANTI_ELECTRON_NEUTRINO, ANTI_UP_QUARK, ANTI_DOWN_QUARK, GRAVITON
 };
 
 struct Particle {
-    glm::vec3 pos;      // 位置 (m)
-    glm::vec3 vel;      // 速度 (m/s)
-    glm::vec3 acc;      // 加速度 (m/s²)
+    glm::vec3 pos;
+    glm::vec3 vel;
+    glm::vec3 acc;
     ParticleType type;
-    
-    // 基本属性
-    float mass;         // 质量 (kg)
-    float charge;       // 电荷 (C)
-    
-    // 强力属性（量子色动力学 QCD）
-    float color_charge_red;    // 色荷 R (0-1)
-    float color_charge_green;  // 色荷 G (0-1)
-    float color_charge_blue;   // 色荷 B (0-1)
-    
-    // 弱力属性（电弱统一理论）
-    float weak_isospin;        // 弱同位旋
-    float weak_hypercharge;    // 弱超荷
-    
-    // 引力属性
-    float stress_energy;       // 应力-能量张量（简化）
-    
+    float mass;
+    float charge;
+    float color_charge;
+    float weak_isospin;
     bool active;
-    float lifetime;     // 寿命 (s)，-1表示稳定
+    float lifetime;
     
-    Particle(ParticleType t = ParticleType::PROTON, glm::vec3 position = glm::vec3(0.0f));
+    // 原子核集群相关
+    bool isInNucleus;
+    int nucleusId;
+    glm::vec3 nucleusOffset;
+    bool inOrbit;
+    int orbitLayer;
+    int orbitIndex;
+    
+    Particle(ParticleType t = ParticleType::PROTON, glm::vec3 position = glm::vec3(0.0f))
+        : pos(position), vel(0.0f), acc(0.0f), type(t), mass(getMass(t)), charge(getCharge(t))
+        , color_charge(0.0f), weak_isospin(0.0f), active(true), lifetime(getLifetime(t))
+        , isInNucleus(false), nucleusId(-1), nucleusOffset(0.0f), inOrbit(false), orbitLayer(-1), orbitIndex(-1) {}
     
     static const char* typeToString(ParticleType t);
-    static void getProperties(ParticleType t, float& mass, float& charge,
-                              float& cr, float& cg, float& cb,
-                              float& isospin, float& hypercharge);
+    static float getMass(ParticleType t);
+    static float getCharge(ParticleType t);
     static float getLifetime(ParticleType t);
 };
